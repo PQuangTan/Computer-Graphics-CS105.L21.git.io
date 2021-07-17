@@ -1,0 +1,64 @@
+/* Reset css */
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 28px;
+}
+
+#main{
+    display: block;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    overflow: hidden; 
+    background: linear-gradient(#e4e0ba, #f7d9aa);
+    left: 0;
+    top: 0;
+}
+
+#content{
+    position: absolute;
+    margin-top: 17%;
+    margin-left: 40%;
+    text-align: center;
+}
+
+#content h1{
+    font-size: 88px;
+}
+
+#content #subject{
+    font-size: 50px;
+}
+
+#content .infor{
+    display: inline-block;
+    text-align: left;
+    margin-top: 17px;
+}
+
+.infor .nameStudents,.mssvStudents{
+    display: inline-block;
+    margin: 0 0 0 64px;
+}
+
+#button-start{
+    width: 168px;
+    height: 43px;
+    margin: 40px;
+    box-sizing: border-box;
+    color: white;
+    background-color: #F66B58;
+    border: none;
+    font-size: 27px;
+} 
+
+#button-start:hover{
+    color: white;
+    background-color: darkcyan;
+}
