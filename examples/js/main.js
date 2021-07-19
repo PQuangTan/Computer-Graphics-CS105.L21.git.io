@@ -51,25 +51,15 @@ function init() {
 
 	// Load Texture
     var GuiConfig = function() {
-        this['Image Path'] = '';  // default image path
-        var file;
         this['Upload Image'] = function() {
             // you need to create an input element in HTML, explained later
     
             var input = document.getElementById('img-path');
             input.addEventListener('change', function() {
-                file = input.files[0];
-                // image_path = input.value;
-                config['Image Path'] = file.name;
-                //image_path = file.name;
-                image_path = URL.createObjectURL( file )
-                // update all controllers
-                var path = (window.URL || window.webkitURL).createObjectURL(file);
-                console.log('path', path);
+                var file = input.files[0];
+                image_path = URL.createObjectURL( file );
+                data.surface = "Texture";
     
-                for (var i in gui.__controllers) {
-                    gui.__controllers[i].updateDisplay();
-                }
             });
             input.click();
         };
@@ -109,7 +99,7 @@ function init() {
     objectFolder.add(data, 'transform', ['None', 'Translate', 'Scale', 'Rotate']).name('Transform Mode').onChange(transformMode);
     objectFolder.add(data, 'model', ["Box", "Sphere", "Cone", "Cylinder", "Torus", "Knot", "Teapot", "Tetrahedron", "Octahedron", "Dodecahedron", "Icosahedron"]).name('Model').onChange(generateGeometry);
     objectFolder.add(data, 'surface', ["Solid", "Wireframes", "Points", "Texture"]).name('Surface').onChange(generateGeometry);
-    objectFolder.add(config, 'Upload Image');
+    objectFolder.add(config, 'Upload Image').onChange(generateGeometry)
     objectFolder.addColor( data, 'objectcolor' ).name('Color').onChange(function(value) {mesh.material.color.set(value)});
     
     let cameraFolder = gui.addFolder('Camera');
@@ -132,6 +122,7 @@ function init() {
     window.addEventListener('resize', onWindowResize);
 
 }
+var t = 0
 
 function transformMode() {
     switch (data.transform) {
@@ -193,6 +184,8 @@ function generateGeometry() {
             size: 1
         }));
     } else if (data.surface == "Texture") {
+        t++;
+        console.log("t:", t);
         texture = new THREE.TextureLoader().load(image_path, render);
         texture.anisotropy = renderer.capabilities.getMaxAnisotropy();
         mesh = new THREE.Mesh(geometry, new THREE.MeshLambertMaterial({
